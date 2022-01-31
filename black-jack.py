@@ -3,6 +3,8 @@ import random
 #from replit import clear
 from subprocess import call
 
+GET_USER_INPUT_KEEP_PLAYING = "Type 'yes' to keep playing, or 'no' to cash out:\n"
+
 def clear():
     # check and make call for specific operating system
     _ = call('clear' if os.name =='posix' else 'cls')
@@ -12,9 +14,6 @@ def clear():
 ## The ace can count as 11 or 1
 ##########################################
 card_deck = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
-
-#Player defines moneypool to play with
-bank = int(input("With how much money to you want to enter the table?: $"))
 
 #Start Game
 def black_jack_game(bank):
@@ -75,7 +74,7 @@ def black_jack_game(bank):
                     player_command = "STAND"
                     bank = bank - bet
                     print(f"You lost {bet}$. Your bank is now at {bank}$.")
-                    keep_playing = input("Type 'yes' to keep playing, or 'no' to cash out:\n").upper()
+                    keep_playing = input(GET_USER_INPUT_KEEP_PLAYING).upper()
             else: #player entered "STAND": Thus finishing our turn
                 print("\n\n")
 
@@ -101,7 +100,7 @@ def black_jack_game(bank):
                             check_scores = False
                             bank = bank + bet
                             print(f"You won {bet}$. Your bank is now at {bank}$.")
-                            keep_playing = input("Type 'yes' to keep playing, or 'no' to cash out:\n").upper()
+                            keep_playing = input(GET_USER_INPUT_KEEP_PLAYING).upper()
 
         #Checking who has a higher score
         if check_scores == True:
@@ -109,18 +108,21 @@ def black_jack_game(bank):
                 print("DEALER WINS.")
                 bank = bank - bet
                 print(f"You lost {bet}$. Your bank is now at {bank}$.")
-                keep_playing = input("Type 'yes' to keep playing, or 'no' to cash out:\n").upper()
+                keep_playing = input(GET_USER_INPUT_KEEP_PLAYING).upper()
             elif sum_dealer_cards < sum_your_cards:
                 bank = bank + bet
                 print(f"You won {bet}$. Your bank is now at {bank}$.")
-                keep_playing = input("Type 'yes' to keep playing, or 'no' to cash out:\n").upper()
+                keep_playing = input(GET_USER_INPUT_KEEP_PLAYING).upper()
             else:
                 print("DRAW.")
                 print(f"Your bank is still at {bank}$.")
-                keep_playing = input("Type 'yes' to keep playing, or 'no' to cash out:\n").upper()
+                keep_playing = input(GET_USER_INPUT_KEEP_PLAYING).upper()
 
         #Player enters 'NO' and wants to end the game.
         if keep_playing == "NO":
             print(f"\nYour cashout is {bank}$.\nThank you for playing.")
 
-black_jack_game(bank)
+if __name__ == "__main__":
+    # Player defines moneypool to play with
+    bank = int(input("With how much money to you want to enter the table?: $"))
+    black_jack_game(bank)
